@@ -30,24 +30,24 @@
 6. [Ressources](#ressources)
 
 # Introduction
-Intro here
+For my first network lesson, I had to create and setup a whole server using SSH. The goal was to learn the usage of many tools, like SSH, SCP, ufw, 
 
 # Manipulations
-### VPS Creation
+## VPS Creation
 - - -
-### Connect to the VPS server
+## Connect to the VPS server
 - - -
-### Key Authentification
+## Key Authentification
 - - -
-### Disable password authentification
+## Disable password authentification
 - - -
-### Use SCP FTP & SFTP
+## Use SCP FTP & SFTP
 - - -
-### Create a SSH tunnel
+## Create a SSH tunnel
 - - -
-### Change the SSH Port
+## Change the SSH Port
 - - - 
-### Setup Fail2Ban
+## Setup Fail2Ban
 - - -
 # Issues and solutions
 - - -
