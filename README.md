@@ -38,7 +38,7 @@ For my first network lesson, I had to create and setup a whole server using SSH.
 ## VPS Creation
 To start the work, I needed a VPS to (Virtual Private Server). It's a distant server that is fractionned into smaller dedicated servers. I paid one small VPS on [Ionos](https://www.ionos.fr/). 
 
-Now I needed to create a user so I will not have to connect into r00t because it can cause many issues (all details in (#issue-with-r00t-user)). To do so, I had to connect into root user using the following command: 
+Now I needed to create a user so I will not have to connect into r00t because it can cause many issues (all details in ([Issue with r00t user](#issue-with-r00t-user)). To do so, I had to connect into root user using the following command: 
 ```
 ssh root@serveradress
 ```
@@ -186,6 +186,7 @@ sudo systemctl restart fail2ban
 Now if someone is trying to connect with SSH and fail password or key auth too many times, his IP will be banned.
 - - -
 # Issues and solutions
+## Issue with r00t user
 - - -
 # Analysis
 - - -
