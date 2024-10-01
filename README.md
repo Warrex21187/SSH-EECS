@@ -1,39 +1,40 @@
 # **SSH Protocol**
 ## How to setup a server using SSH
-### In this readme you will find all the steps required to create and secure a SSH server with basic knowledge.
+### In this readme you will find all the steps required to create and secure a SSH server with basic knowledge. 📘
 - - - 
 # Table of Contents
-1. [Introduction](#introduction)
+1. [Introduction](#introduction) 🧾
 
-2. [List of manipulations](#list-of-manipulations)
+2. [List of manipulations](#list-of-manipulations) 📜
 
-2.1   - [VPS creation](#vps-creation)
+2.1   - [VPS creation](#vps-creation) 🌐
 
-2.2   - [Connect to the VPS server](#connect-to-the-vps-server)
+2.2   - [Connect to the VPS server](#connect-to-the-vps-server) 💻
 
-2.3   - [Key Authentification](#key-authentification)
+2.3   - [Key Authentification](#key-authentification) 🔐
 
-2.4   - [Disable password authentification](#disable-password-authentification)
+2.4   - [Disable password authentification](#disable-password-authentification) ⌨️✖️
 
-2.5   - [Use SCP and SFTP](#use-scp-ftp-and-sftp)
+2.5   - [Use SCP and SFTP](#use-scp-ftp-and-sftp) 🗃️
 
-2.6   - [Create a SSH tunnel](#create-a-ssh-tunnel)
+2.6   - [Create a SSH tunnel](#create-a-ssh-tunnel) 🚅
 
-2.7   - [Change the SSH port](#change-the-ssh-port)
+2.7   - [Change the SSH port](#change-the-ssh-port) 🔄
 
-2.8   - [Setup Fail2ban](#setup-fail2ban)
+2.8   - [Setup Fail2ban](#setup-fail2ban) 🚫
 
-4. [Issues and solutions](#issues-and-solutions)
+4. [Issues and solutions](#issues-and-solutions) ⁉️
 
       - [Issues with r00t user](#issues-with-r00t-user)
       - [Password Authentification still activated](#password-authentification-still-activated)
       - [Issues with Port22](#issues-with-port22)
-      - [Can't connect on Port 2222](#can't-connect-on-port-2222)
+      - [Can't connect on Port 2222](#cant-connect-on-port-2222)
+      - [Avoid Redundancy on Firewall](#avoid-redundancy-on-firewall)
       - [How to unban an user Fail2Ban](#how-to-unban-an-user-fail2ban)
 
-5. [Analysis](#analysis)
+5. [Analysis](#analysis) 🖥️
 
-6. [Ressources](#ressources)
+6. [Ressources](#ressources) 📁
 
 # Introduction
 For my first network lesson, I had to create and setup a whole server using SSH. The goal was to learn the usage of many tools, like SSH, SCP, ufw, and use them to setup my own working server. In this depository you will find my complete experience, I will list all the steps that were required to finish the assignment, listing the commands used, and what I learned. Then I will list the issues I faced, and the solutions I found. I will finish with an analysis where I will mostly talk about the matter of SSH for data security and the pros of the security measures. 
@@ -177,6 +178,14 @@ sudo ufw allow http #allow HTTP
 sudo ufw allow https  #allow HTTPS
 sudo ufw allow ‘Nginx Full’ #to allow Nginx
 ```
+Next make sure to enable ufw with the command:
+```
+sudo ufw enable
+```
+And check his status with:
+```
+sudo ufw status
+```
 Now I want to connect using the port 2222. I use the following command:
 ```
 ssh -p 2222 loris@serveradress
@@ -252,11 +261,137 @@ If it still doesn't work, go again in /etc/ssh/sshd_config, and look/add the fol
 Here's a list of issues with the Port 22 and why you should **NOT** use it.
 - Port 22 is the default Port for SSH, it's the most known Port, a lot of malicious bot are set up to scan IP adress and try to force-brut attack. Changing the port will not stop these attack tho, but will make it way harder to achieve.
 - It will reduce the amount of malicious bot's scan because they are configured to scan only specific ports
-- 
+- It will reduce the amount of false flag of bot's trying to connect on port 22 so you will be able to monitor legitimate attack more easily
+- It is also easy to set, so remember to change your Port.
+- - -
+## Can't connect on Port 2222
+You followed all the steps but can't connect with port 2222 ? Here are the problems I went trough and that you are certainly going trough.
+- My server wasn't listening on port 2222. To check if server is listening on a port use this command:
+```
+sudo netstat -tuln | grep LISTEN
+```
+Here's an example output:
+tcp        0      0 0.0.0.0:**22**              0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:**3306**          0.0.0.0:*               LISTEN     
+tcp6       0      0 :::**80**                   :::*                    LISTEN     
+tcp6       0      0 :::**443**                 :::*                    LISTEN     
+tcp6       0      0 :::**22**                 :::*                    LISTEN
+Number that I bolded are the Ports that the server is listening on. Here we have Port 22, 3306, 8, and 443
+If you do this command and don't see port 2222, is that server isn't listening on that port.
+To fix that, simply install OpenSSH-server, because if your server don't have OpenSSH for him, it will not work. Here's the command to install:
+```
+sudo apt install openssh-server
+```
+Now restart SSH:
+```
+sudo systemctl status ssh
+```
+If SSH is not running, you can start it with:
+```
+sudo systemctl start ssh
+```
+Now ensure that SSH is startin' on boot:
+```
+sudo systemctl enable ssh
+```
+Now try the netstat commannd again and you should see the port 2222.
+Now try to login with that command:
+```
+ssh -p 2222 user@serveradress
+```
+- If the method didn't worked for you, the issue may come from you VPS hoster, on Ionos for instance, there is a firewall policy in the panel.
+You can either deactivate it or set him up correctly with port 2222.
+- - - 
+## Avoid Redundancy on Firewall
+After following my steps to allow rules on the firewall, if you do **sudo ufw status** you should get the following lines:
+```
+Status: active
 
+To                         Action      From
+--                         ------      ----
+22                         DENY        Anywhere
+Nginx Full                 ALLOW       Anywhere
+OpenSSH                    ALLOW       Anywhere
+80/tcp                     ALLOW       Anywhere
+443                        ALLOW       Anywhere
+2222                       ALLOW       Anywhere
+22/tcp                     DENY        Anywhere
+2222/tcp                   ALLOW       Anywhere
+22 (v6)                    DENY        Anywhere (v6)
+Nginx Full (v6)            ALLOW       Anywhere (v6)
+OpenSSH (v6)               ALLOW       Anywhere (v6)
+80/tcp (v6)                ALLOW       Anywhere (v6)
+443 (v6)                   ALLOW       Anywhere (v6)
+2222 (v6)                  ALLOW       Anywhere (v6)
+22/tcp (v6)                DENY        Anywhere (v6)
+2222/tcp (v6)              ALLOW       Anywhere (v6)
+```
+Now there are a lot of port you can delete:
+- The port 22 and 22/tcp (only if connectinf with port 2222 works)
+- The port 2222/tcp (because you already have the port 2222)
+- You can also delete the Ports 80, 80/tcp and 443 (HTTP and HTTPS) because **Nginx** cover the two ports already
+  To delete a port do the commands:
+  ```
+  sudo ufw status numbered
+  and to delete
+  sudo ufw delete <rule number>
+  ```
+  You should end up with this:
+  Status: active
 
+     To                         Action      From
+     --                         ------      ----
+[ 1] Nginx Full                 ALLOW IN    Anywhere
+[ 2] OpenSSH                    ALLOW IN    Anywhere
+[ 3] 2222                       ALLOW IN    Anywhere
+[ 4] Nginx Full (v6)            ALLOW IN    Anywhere (v6)
+[ 5] OpenSSH (v6)               ALLOW IN    Anywhere (v6)
+[ 6] 2222 (v6)                  ALLOW IN    Anywhere (v6)
+- - -
+## How to unban an user Fail2Ban
+One of your user got banned by Fail2Ban ? Here's how ton uban him:
+First get his IP, in your terminal you can do the following command:
+```
+fail2ban-client get sshd banip
+```
+Then to unban him simply do the following command:
+```
+fail2ban-client set sshd unbanip <X.X.X.X>
+```
+- - -
 
 # Analysis
+## Importance of SSH Encryption for Data Security. 
+The SSH (Secure Shell) protocol is crucial for securing remote connections over untrusted networks. Unlike protocols such as Telnet, which send data in non-encrypted text, SSH uses encryption to ensure the confidentiality and integrity of the data exchanged between the client and server. Here are key points on the importance of SSH encryption:
+
+- Data Confidentiality: Through strong encryption, all transmitted data, such as usernames, passwords, and commands, is kept private. Even if an attacker intercepts the network traffic, they cannot read the data without the private keys.
+
+- Message Integrity: SSH ensures that the data is not modified during the transmission by using hash functions and digital signatures. This guarantees that information is neither altered nor corrupted before it reaches its destination.
+
+- Secure Authentication: One of the strengths of SSH is its secure authentication mechanism, often using public/private key pairs, reducing the risk of brute-force attacks or password interception.
+
+## Advantages of Security Measures (Port Change, Fail2Ban)
+
+Changing the Default SSH Port:
+
+- Reduced Automated Attacks: One of the first steps in an attack is to scan network ports to identify available services. SSH runs by default on port 22, making it a popular target for automated attack scripts. Changing the port to something non-standard (e.g., 2222) reduces the chance of being targeted by such bots. While not a full-proof solution, it's an extra layer of security known as security through obscurity.
+
+Fail2Ban:
+
+- Protection from Brute-Force Attacks: Fail2Ban is a tool that monitors log files to detect repeated failed authentication attempts (such as brute-force attempts on SSH). Once a predefined number of failed attempts is reached, Fail2Ban can block the source IP address for a specific period, reducing the risk of intrusion.
+
+    Automated Defense: Fail2Ban offers a reactive security measure by automating the process of banning malicious IPs, which is especially useful for administrators who cannot monitor the servers 24/7.
+
+3. Observations with Tools like Wireshark
+
+Using a network monitoring tool like Wireshark to capture and analyze traffic helps visualize the benefits of SSH encryption and the effectiveness of security measures. Key observations include:
+    Encrypted Packets: When analyzing an SSH session with Wireshark, you can observe that all content in the traffic is encrypted. This makes it impossible to intercept sensitive information, such as usernames or commands. In contrast to unencrypted protocols like Telnet, captured packets in an SSH session are unreadable without the necessary private keys.
+    Failed Connection Attempts: In an environment where Fail2Ban is active, you can observe failed connection attempts (e.g., brute-force attacks) targeting the SSH port. Wireshark allows you to see multiple connection requests coming from the same IP address. These observations can be correlated with system logs to verify that Fail2Ban has blocked the malicious IP.
+    Port Change: After configuring SSH to listen on a different port (e.g., 2222), Wireshark shows that connection attempts to the default port 22 no longer receive responses. This demonstrates that the SSH service is no longer exposed on its default port, helping to mitigate automated scanning attacks.
+
+Conclusion
+
+SSH encryption is essential for securing remote connections by preventing data interception. Additional security measures, such as changing the default port and using Fail2Ban, complement this by reducing the risk of brute-force attacks or other intrusions. Tools like Wireshark provide a clear view of how these configurations affect network traffic, confirming the effectiveness of the security measures implemented.
 - - -
 # Ressources
 - - -
