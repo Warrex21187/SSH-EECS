@@ -1,6 +1,6 @@
 <picture>
  <source media="(prefers-color-scheme: dark)" srcset="https://cdn.discordapp.com/attachments/1198639919543898202/1290671459147972649/Screenshot_2024-10-01_15_42_40.png?ex=66fd4ef7&is=66fbfd77&hm=433a1c965a7198abb81aae2411459f50ba18e336c02aa8159921d049b83f3122&">
- <source media="(prefers-color-scheme: light)" srcset="[YOUR-LIGHTMODE-IMAGE](https://cdn.discordapp.com/attachments/1198639919543898202/1290671459147972649/Screenshot_2024-10-01_15_42_40.png?ex=66fd4ef7&is=66fbfd77&hm=433a1c965a7198abb81aae2411459f50ba18e336c02aa8159921d049b83f3122&)">
+ <source media="(prefers-color-scheme: light)" srcset="https://cdn.discordapp.com/attachments/1198639919543898202/1290671459147972649/Screenshot_2024-10-01_15_42_40.png?ex=66fd4ef7&is=66fbfd77&hm=433a1c965a7198abb81aae2411459f50ba18e336c02aa8159921d049b83f3122&">
  <img alt="YOUR-ALT-TEXT" src="https://cdn.discordapp.com/attachments/1198639919543898202/1290671459147972649/Screenshot_2024-10-01_15_42_40.png?ex=66fd4ef7&is=66fbfd77&hm=433a1c965a7198abb81aae2411459f50ba18e336c02aa8159921d049b83f3122&">
 </picture>
 
@@ -21,7 +21,7 @@
 
 2.4   - [Disable password authentification](#disable-password-authentification) ⌨️✖️
 
-2.5   - [Use SCP and SFTP](#use-scp-ftp-and-sftp) 🗃️
+2.5   - [Use SCP and SFTP](#use-scp-and-sftp) 🗃️
 
 2.6   - [Create a SSH tunnel](#create-a-ssh-tunnel) 🚅
 
@@ -43,7 +43,7 @@
 6. [Ressources](#ressources) 📁
 
 # Introduction
-For my first network lesson, I had to create and setup a whole server using SSH. The goal was to learn the usage of many tools, like SSH, SCP, ufw, and use them to setup my own working server. In this depository you will find my complete experience, I will list all the steps that were required to finish the assignment, listing the commands used, and what I learned. Then I will list the issues I faced, and the solutions I found. I will finish with an analysis where I will mostly talk about the matter of SSH for data security and the pros of the security measures. 
+For my first network lesson, I had to create and setup a whole server using SSH. The goal was to learn the usage of many tools, like **SSH**, **SCP**, **ufw**, and use them to setup my own working server. In this depository you will find my complete experience, I will list all the steps that were required to finish the assignment, listing the commands used, and what I learned. Then I will list the issues I faced, and the solutions I found. I will finish with an analysis where I will mostly talk about the matter of SSH for data security and the pros of the security measures. 
 - - -
 # List of Manipulations
 ## VPS Creation
@@ -110,7 +110,7 @@ sudo systemctl restart ssh
 Then I tested the connexion, if you connect to the server with another computer, it will use the Key or ask you for the Passphrase **and not the password**
 If you've done all these steps and it still asks you for your password, consult([Password Authentification still activated](#password-authentification-still-activated))
 - - -
-## Use SCP FTP and SFTP
+## Use SCP and SFTP
 Next I learned how to transfer files from my local machine to the server using the SCP Protocol (Secure Copy Protocol), it encrypts the file and send them surely.
 
 First I needed a file to transfer, here's the command: (*careful you need to create it in your local machine not in the server*)
@@ -262,6 +262,7 @@ If it still doesn't work, go again in /etc/ssh/sshd_config, and look/add the fol
 - **UsePAM no**
   Then restart SSH (sudo systemctl restart ssh)
   NOTE: These solutions didn't worked for me even tho they should've, something may be missing.
+  
 - - - 
 ## Issues with Port22
 Here's a list of issues with the Port 22 and why you should **NOT** use it.
@@ -400,6 +401,13 @@ Conclusion
 
 SSH encryption is essential for securing remote connections by preventing data interception. Additional security measures, such as changing the default port and using Fail2Ban, complement this by reducing the risk of brute-force attacks or other intrusions. In a world where our data is a precious ressource for companies and hackers, encryption with SSH and additionnal security measures assure it's safety against hacking trials.
 - - -
+If you followed all steps and red all the issues/solutions everything should work well !
+<picture>
+ <source media="(prefers-color-scheme: dark)" srcset="https://cdn.discordapp.com/attachments/1198639919543898202/1290671459147972649/Screenshot_2024-10-01_15_42_40.png?ex=66fd4ef7&is=66fbfd77&hm=433a1c965a7198abb81aae2411459f50ba18e336c02aa8159921d049b83f3122&">
+ <source media="(prefers-color-scheme: light)" srcset="https://cdn.discordapp.com/emojis/1229032628972294204.webp?size=96&quality=lossless">
+ <img alt="YOUR-ALT-TEXT" src="https://cdn.discordapp.com/emojis/1229032628972294204.webp?size=96&quality=lossless">
+</picture>
+
 # Ressources
 [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu)
 
@@ -408,6 +416,8 @@ SSH encryption is essential for securing remote connections by preventing data i
 [WikiPedia](https://wikipedia.org)
 
 [StackOverflow Forums](stackoverflow.com)
+
+
 
 
 
