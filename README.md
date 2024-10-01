@@ -374,7 +374,7 @@ The SSH (Secure Shell) protocol is crucial for securing remote connections over 
 
 Changing the Default SSH Port:
 
-- Reduced Automated Attacks: One of the first steps in an attack is to scan network ports to identify available services. SSH runs by default on port 22, making it a popular target for automated attack scripts. Changing the port to something non-standard (e.g., 2222) reduces the chance of being targeted by such bots. While not a full-proof solution, it's an extra layer of security known as security through obscurity.
+[Issues with Port22](#issues-with-port22)
 
 Fail2Ban:
 
@@ -382,26 +382,25 @@ Fail2Ban:
 
     Automated Defense: Fail2Ban offers a reactive security measure by automating the process of banning malicious IPs, which is especially useful for administrators who cannot monitor the servers 24/7.
 
-3. Observations with Tools like Wireshark
+## Observations with Tools like Wireshark
 
-Using a network monitoring tool like Wireshark to capture and analyze traffic helps visualize the benefits of SSH encryption and the effectiveness of security measures. Key observations include:
-    Encrypted Packets: When analyzing an SSH session with Wireshark, you can observe that all content in the traffic is encrypted. This makes it impossible to intercept sensitive information, such as usernames or commands. In contrast to unencrypted protocols like Telnet, captured packets in an SSH session are unreadable without the necessary private keys.
-    Failed Connection Attempts: In an environment where Fail2Ban is active, you can observe failed connection attempts (e.g., brute-force attacks) targeting the SSH port. Wireshark allows you to see multiple connection requests coming from the same IP address. These observations can be correlated with system logs to verify that Fail2Ban has blocked the malicious IP.
-    Port Change: After configuring SSH to listen on a different port (e.g., 2222), Wireshark shows that connection attempts to the default port 22 no longer receive responses. This demonstrates that the SSH service is no longer exposed on its default port, helping to mitigate automated scanning attacks.
+Using a network monitoring tool like Wireshark to capture and analyze traffic helps visualize the benefits of SSH encryption and the effectiveness of security measures.
+Key observations include:
+- Encrypted Packets: When analyzing an SSH session with Wireshark, you can observe that all content in the traffic is encrypted. This makes it impossible to intercept sensitive information, such as usernames or commands. In contrast to unencrypted protocols like Telnet, captured packets in an SSH session are unreadable without the necessary private keys.
+- Failed Connection Attempts: In an environment where Fail2Ban is active, you can observe failed connection attempts (e.g., brute-force attacks) targeting the SSH port. Wireshark allows you to see multiple connection requests coming from the same IP address. These observations can be correlated with system logs to verify that Fail2Ban has blocked the malicious IP.
+- Port Change: After configuring SSH to listen on a different port (e.g., 2222), Wireshark shows that connection attempts to the default port 22 no longer receive responses. This demonstrates that the SSH service is no longer exposed on its default port, helping to mitigate automated scanning attacks.
 
 Conclusion
 
-SSH encryption is essential for securing remote connections by preventing data interception. Additional security measures, such as changing the default port and using Fail2Ban, complement this by reducing the risk of brute-force attacks or other intrusions. Tools like Wireshark provide a clear view of how these configurations affect network traffic, confirming the effectiveness of the security measures implemented.
+SSH encryption is essential for securing remote connections by preventing data interception. Additional security measures, such as changing the default port and using Fail2Ban, complement this by reducing the risk of brute-force attacks or other intrusions. In a world where our data is a precious ressource for companies and hackers, encryption with SSH and additionnal security measures assure it's safety against hacking trials.
 - - -
 # Ressources
-- - -
-### Advanced Usage
-Advanced usage details.
+[Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu)
 
-# Contributing
-Guidelines for contributing.
+[ChatGPT](https://chatgpt.com)
 
-# License
-License details.
+[WikiPedia](https://wikipedia.org)
+
+[StackOverflow Forums](stackoverflow.com)
 
 
