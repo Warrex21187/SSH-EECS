@@ -15,7 +15,7 @@
 
 2.4   - [Disable password authentification](#disable-password-authentification)
 
-2.5   - [Use SCP FTP and SFTP](#use-scp-ftp-and-sftp)
+2.5   - [Use SCP and SFTP](#use-scp-ftp-and-sftp)
 
 2.6   - [Create a SSH tunnel](#create-a-ssh-tunnel)
 
@@ -81,8 +81,27 @@ ssh-copy-id username@serveradress
 You will have a message (type in "yes"), and then you will be asked to enter your password. You will receive a confirmation, now try to connect and you will see the server asking you for your passphrase if you put one or it will connect using the key directly.
 - - -
 ## Disable password authentification
+Now that you've set a Key up, you want to disable Password authentification to add another layer of security.
+To access and modify the file located in /etc/ssh/sshd_config use the following command:
+```
+sudo nano /etc/ssh/sshd_config
+```
+Now that you are in, look for the "Password Authentification yes" line, uncomment it and replace it by "Password Authentification no".
+
+Next save it and close the window by doing this combination on keys: *CRTL+O, Enter, CRTL+X*
+
+Then restart your SSH service with the command:
+```
+sudo systemctl restart ssh
+```
+Then test the connexion, if you connect to the server with another computer, it will use the Key or ask you for the Passphrase **and not the password**
+If you've done all these steps and it still asks you for your password, consult
 - - -
 ## Use SCP FTP and SFTP
+Now I will explain you how to transfer files from your local machine to the server using the SCP Protocol (Secure Copy Protocol), it encrypts the file and send them surely.
+
+First you need a file to transfer, here's the command
+
 - - -
 ## Create a SSH tunnel
 - - -
