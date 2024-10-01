@@ -54,11 +54,12 @@ Now I needed to create a user so I will not have to connect into r00t because it
 ssh root@serveradress
 ```
 Then I needed to enter the password that was hidden into the Ionos server panel. 
+
 After being successfully connected I needed to create a new user using the following command:
 ```
 adduser "name"
 ```
-and then fill in all the required informations (password and optionnal fields).
+And then fill in all the required informations (password and optionnal fields).
 - - -
 ## Connect to the VPS server
 Now that I had created my user I needed to give him all permissions. I typed the following command:
@@ -71,6 +72,7 @@ loris ALL=(ALL:ALL) ALL
 ```
 (To put your user just replace "loris" by your own username)
 By that I gave to my user, all the sudo permission to use locked commands.
+
 Now I just needed to disconnect and reconnect using the following command:
 ```
 ssh loris@serveradress
@@ -83,7 +85,7 @@ Here's how I created a pair of key:
 ```
 ssh-keygen -t ed25519
 ```
-**ssh-keygen** is the command to create a key, **-t** specify the type of key to create and **ed25519** is the encryption algorithm (*Ed25519 is preferred over RSA because it is faster, provides better security with shorter key sizes, and is considered to be more resistant to certain types of cryptographic attacks.*)
+**ssh-keygen** is the command that create a key, **-t** specify the type of key to create and **ed25519** is the encryption algorithm (*Ed25519 is preferred over RSA because it is faster, provides better security with shorter key sizes, and is considered to be more resistant to certain types of cryptographic attacks.*)
 
 Now that my key is set locally I needed to copy it on the server:
 ```
@@ -93,6 +95,7 @@ You will have a message (type in "yes"), and then you will be asked to enter you
 - - -
 ## Disable password authentification
 Now that I've set a Key up, I wanted to disable Password authentification to add another layer of security.
+
 To access and modify the file located in /etc/ssh/sshd_config I used the following command:
 ```
 sudo nano /etc/ssh/sshd_config
@@ -108,6 +111,7 @@ Then restart the SSH service with the command:
 sudo systemctl restart ssh
 ```
 Then I tested the connexion, if you connect to the server with another computer, it will use the Key or ask you for the Passphrase **and not the password**
+
 If you've done all these steps and it still asks you for your password, consult([Password Authentification still activated](#password-authentification-still-activated))
 - - -
 ## Use SCP and SFTP
@@ -132,6 +136,7 @@ To check if the file has been succesfully sent use the following command:
 ssh username@serveradress "ls -l /home/username/"
 ```
 There's another protocol called SFTP that allow for an interactive transfer.
+
 To connect with SFTP use command:
 ```
 sftp user@serveradress
@@ -200,6 +205,7 @@ If connection on port 2222 fails check [Can't connect on Port 2222](#can't-conne
 - - - 
 ## Setup Fail2Ban
 To avoid brute-force attack on my server I added a simple but efficient solution called **Fail2Ban**
+
 To install Fail2Ban I used the following command:
 ```
 sudo apt install fail2ban
@@ -215,11 +221,13 @@ Add these lines, then restart Fail2Ban for it to be operationnal:
 sudo systemctl restart fail2ban
 ```
 Now if someone is trying to connect with SSH and fail password or key auth too many times, his IP will be banned.
+
 If a user is banned check [How to unban an user Fail2Ban](#how-to-unban-an-user-fail2ban)
 - - -
 # Issues and solutions
 ## Issues with r00t user
 Here are some issues by operating the server while in root:
+
 - Security Risks
 
      Increased Attack Surface: The root account has unrestricted access to all commands and files on the system. If compromised, an attacker can gain full control of the system.
@@ -247,7 +255,9 @@ You should use Sudo instead of root user to avoid mistakes.
 - - -
 ## Password Authentification still activated
 If you can still connect by using your password, it may come from a conflict between different authentification system.
+
 First check if the PubkeyAuthentication yes line is present and uncommented in the config file in /etc/ssh/sshd_config (with the command **sudo nano /etc/ssh/sshd_config**) and restart SSH with **sudo systemctl restart ssh**.
+
 Then check files permission with the following commands:
 ```
 chmod 700 ~/.ssh
@@ -261,6 +271,7 @@ If it still doesn't work, go again in /etc/ssh/sshd_config, and look/add the fol
 - **ChallengeResponseAuthentication no**
 - **UsePAM no**
   Then restart SSH (sudo systemctl restart ssh)
+
   NOTE: These solutions didn't worked for me even tho they should've, something may be missing.
   
 - - - 
@@ -284,7 +295,9 @@ tcp6       0      0 :::**80**                   :::*                    LISTEN
 tcp6       0      0 :::**443**                 :::*                    LISTEN     
 tcp6       0      0 :::**22**                 :::*                    LISTEN
 Number that I bolded are the Ports that the server is listening on. Here we have Port 22, 3306, 8, and 443
+
 If you do this command and don't see port 2222, is that server isn't listening on that port.
+
 To fix that, simply install OpenSSH-server, because if your server don't have OpenSSH for him, it will not work. Here's the command to install:
 ```
 sudo apt install openssh-server
@@ -302,11 +315,13 @@ Now ensure that SSH is startin' on boot:
 sudo systemctl enable ssh
 ```
 Now try the netstat commannd again and you should see the port 2222.
+
 Now try to login with that command:
 ```
 ssh -p 2222 user@serveradress
 ```
 - If the method didn't worked for you, the issue may come from you VPS hoster, on Ionos for instance, there is a firewall policy in the panel.
+
 You can either deactivate it or set him up correctly with port 2222.
 - - - 
 ## Avoid Redundancy on Firewall
@@ -357,11 +372,12 @@ Now there are a lot of port you can delete:
 - - -
 ## How to unban an user Fail2Ban
 One of your user got banned by Fail2Ban ? Here's how ton uban him:
-First get his IP, in your terminal you can do the following command:
+
+First get his IP, in your terminal you can execute the following command:
 ```
 fail2ban-client get sshd banip
 ```
-Then to unban him simply do the following command:
+Then to unban him simply execute the following command:
 ```
 fail2ban-client set sshd unbanip <X.X.X.X>
 ```
