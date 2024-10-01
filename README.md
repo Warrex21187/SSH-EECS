@@ -1,3 +1,9 @@
+<picture>
+ <source media="(prefers-color-scheme: dark)" srcset="https://cdn.discordapp.com/attachments/1198639919543898202/1290671459147972649/Screenshot_2024-10-01_15_42_40.png?ex=66fd4ef7&is=66fbfd77&hm=433a1c965a7198abb81aae2411459f50ba18e336c02aa8159921d049b83f3122&">
+ <source media="(prefers-color-scheme: light)" srcset="[YOUR-LIGHTMODE-IMAGE](https://cdn.discordapp.com/attachments/1198639919543898202/1290671459147972649/Screenshot_2024-10-01_15_42_40.png?ex=66fd4ef7&is=66fbfd77&hm=433a1c965a7198abb81aae2411459f50ba18e336c02aa8159921d049b83f3122&)">
+ <img alt="YOUR-ALT-TEXT" src="https://cdn.discordapp.com/attachments/1198639919543898202/1290671459147972649/Screenshot_2024-10-01_15_42_40.png?ex=66fd4ef7&is=66fbfd77&hm=433a1c965a7198abb81aae2411459f50ba18e336c02aa8159921d049b83f3122&">
+</picture>
+
 # **SSH Protocol**
 ## How to setup a server using SSH
 ### In this readme you will find all the steps required to create and secure a SSH server with basic knowledge. 📘
@@ -402,5 +408,7 @@ SSH encryption is essential for securing remote connections by preventing data i
 [WikiPedia](https://wikipedia.org)
 
 [StackOverflow Forums](stackoverflow.com)
+
+
 
 
