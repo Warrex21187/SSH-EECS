@@ -4,17 +4,21 @@
 - - - 
 # Table of Contents
 1. [Introduction](#introduction)
-2. [Installation](#installation)
-3. [Usage](#usage)
-   - [Basic Usage](#basic-usage)
-   - [Advanced Usage](#advanced-usage)
-4. [Contributing](#contributing)
-5. [License](#license)
+2. [List of manipulations](manipulations)
+3. - [VPS creation](vps)
+   - [Connect to the VPS server](connecttovps)
+   - [Key Authentification](keyauth)
+   - [Disable password authentification](disablepasswordauth)
+   - [Use SCP FTP & SFTP](usescpftpandsftp)
+   - 
+4. [Issues and solutions](#issuesandsolutions)
+5. [Analysis](#analysis)
+6. [Ressources](#ressources)
 
 # Introduction
-Some introduction text here.
+Intro here
 
-# Installation
+# List of manipulations
 Instructions for installation.
 
 # Usage
