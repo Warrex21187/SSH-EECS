@@ -4,6 +4,7 @@
 - - - 
 # Table of Contents
 1. [Introduction](#introduction)
+
 2. [List of manipulations](#manipulations)
 
 2.1   - [VPS creation](#vps)
@@ -32,11 +33,27 @@
 Intro here
 
 # Manipulations
-Instructions for installation.
+### VPS Creation
 
-# Usage
-### Basic Usage
-Basic usage details.
+### Connect to the VPS server
+
+### Key Authentification
+
+### Disable password authentification
+
+### Use SCP FTP & SFTP
+
+### Create a SSH tunnel
+
+### Change the SSH Port
+
+### Setup Fail2Ban
+
+# Issues and solutions
+
+# Analysis
+
+# Ressources
 
 ### Advanced Usage
 Advanced usage details.
