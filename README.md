@@ -10,7 +10,9 @@
    - [Key Authentification](keyauth)
    - [Disable password authentification](disablepasswordauth)
    - [Use SCP FTP & SFTP](usescpftpandsftp)
-   - 
+   - [Create a SSH tunnel](createsshtunnel)
+   - [Change the SSH port](changesshport)
+   - [Setup Fail2ban](setupfail2ban)
 4. [Issues and solutions](#issuesandsolutions)
 5. [Analysis](#analysis)
 6. [Ressources](#ressources)
