@@ -20,7 +20,7 @@
 # Introduction
 Intro here
 
-# List of manipulations
+# Manipulations
 Instructions for installation.
 
 # Usage
