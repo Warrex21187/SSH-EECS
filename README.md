@@ -81,7 +81,7 @@ ssh loris@serveradress
 ## Key Authentification
 Now that user is set, let's talk quickly about Key Authentification. We have a password, so why do we would use a Key over a password ? Well for many reasons: firstly for security reasons, **SSH Keys Are Cryptographically Stronger**, the SSH key pair (*local and server*) is much stronger than a typical password, making it nearly impossible for an attacker to brute-force. It's also more easier to use, and easy to configure: just generate it on your local machine, and then copy it onto the server. It will not ask you to enter a password everytime you want to connect (*except if you put a Key Phrase*) so you don't risk to forgot your password. 
 
-Here's how I created a pair of key:
+Here's how I created a pair of keys:
 ```
 ssh-keygen -t ed25519
 ```
