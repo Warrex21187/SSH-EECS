@@ -138,11 +138,52 @@ sudo apt install nginx #install nginx
 sudo systemctl start nginx #start nginx
 sudo systemctl enable nginx #enable nginx to start on boot
 ```
-Now that Nginx is succesfully installed I can connect to the server.
+Now that Nginx is succesfully installed I can connect to the server. The SSH tunnel is now ready, if I want to connect on the server without being in localhost (for example with my phone) it's possible.
 - - -
 ## Change the SSH Port
+Now I want to change the SSH Port, because by default it's set on the Port 22, the default port there are several issues with this port (check in
+
+To change the port I went in /etc/ssh/sshd_config, find the line Port and Put **Port 2222**
+
+WARNING: To avoid being full rejected by the firewall and not being able to reconnect add another line **Port 22** until you are sure you can connect on port 2222, otherwise you'll have to re install your VPS and strat everything from scratches...
+
+Then I am going to add rules on the firewall using **ufw**.
+
+To allow a new port use the following command:
+```
+sudo ufw allow (port/rule)
+```
+Here is a list of the port you need to open:
+```
+sudo ufw allow OpenSSH #to allow SSH
+sudo ufw allow 22 #allow port 22 to avoid full lock if port 2222 don't work
+sudo ufw allow 2222 #allow port 2222
+sudo ufw allow http #allow HTTP
+sudo ufw allow https  #allow HTTPS
+sudo ufw allow ‘Nginx Full’ #to allow Nginx
+```
+Now I want to connect using the port 2222. I use the following command:
+```
+ssh -p 2222 loris@serveradress
+```
 - - - 
 ## Setup Fail2Ban
+To avoid brute-force attack on my server I added a simple but efficient solution called **Fail2Ban**
+To install Fail2Ban I used the following command:
+```
+sudo apt install fail2ban
+```
+Then I configured it by accessing config file:
+```
+[sshd]
+enabled = true
+port = 2222
+```
+Add these lines, then restart Fail2Ban for it to be operationnal:
+```
+sudo systemctl restart fail2ban
+```
+Now if someone is trying to connect with SSH and fail password or key auth too many times, his IP will be banned.
 - - -
 # Issues and solutions
 - - -
