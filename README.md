@@ -72,7 +72,7 @@ Here's how I created a pair of key:
 ```
 ssh-keygen -t ed25519
 ```
-***ssh-keygen** is the command, **-t** specify the type of key to create and **ed25519** is the encryption algorithm (*Ed25519 is preferred over RSA because it is faster, provides better security with shorter key sizes, and is considered to be more resistant to certain types of cryptographic attacks.*)
+**ssh-keygen** is the command, **-t** specify the type of key to create and **ed25519** is the encryption algorithm (*Ed25519 is preferred over RSA because it is faster, provides better security with shorter key sizes, and is considered to be more resistant to certain types of cryptographic attacks.*)
 
 Now that my key is set locally I needed to copy it on the server:
 ```
@@ -129,7 +129,7 @@ First step is to redirect the local port **8888** to the port **80** of a distan
 ```
 ssh -L 8080:localhost:80 username@serveraddress
 ```
-Now I tried to connect to the server by connecting to: http://localhost:8080
+Now I tried to connect to the server by connecting to: http://localhost:8080 or 192.67.197.102
 
 But it didn't worked. The reason is simple: I needed to install a web server of my VPS (because if I want to connect to a web server without the web server existing it's complicated). So I installed Nginx using the following commands:
 ```
@@ -138,6 +138,7 @@ sudo apt install nginx #install nginx
 sudo systemctl start nginx #start nginx
 sudo systemctl enable nginx #enable nginx to start on boot
 ```
+Now that Nginx is succesfully installed I can connect to the server.
 - - -
 ## Change the SSH Port
 - - - 
