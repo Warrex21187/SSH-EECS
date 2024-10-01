@@ -43,7 +43,7 @@
 6. [Ressources](#ressources) 📁
 
 # Introduction
-For my first network lesson, I had to create and setup a whole server using SSH. The goal was to learn the usage of many tools, like **SSH**, **SCP**, **ufw**, and use them to setup my own working server. In this depository you will find my complete experience. I will list all the steps that were required to finish the assignment: all the commands used, and what I learned. Then I will list the issues I faced, and the solutions I found. I will finish with an analysis where I will mostly talk about the matter of SSH for data security and the pros of the security measures. 
+For my first network lesson, I had to create and setup a whole server using SSH. The goal was to learn the usage of many tools, like **SSH**, **SCP**, **ufw**, and use them to setup my own working server. In this depository you will find my complete experience, then I will list all the steps that were required to finish the assignment: all the commands used, and what I learned. Then I will list the issues I faced, and the solutions I found. I will finish with an analysis where I will mostly talk about the matter of SSH for data security and the pros of the security measures. 
 - - -
 # List of Manipulations
 ## VPS Creation
