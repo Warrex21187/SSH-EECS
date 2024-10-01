@@ -68,29 +68,31 @@ ssh loris@serveradress
 ## Key Authentification
 Now that user is set, let's talk quickly about Key Authentification. We have a password, so why do we would use a Key over a password ? Well for many reasons: firstly for security reasons, **SSH Keys Are Cryptographically Stronger**, the SSH key pair (local and server) is much stronger than a typical password, making it nearly impossible for an attacker to brute-force. It's also more easier to use, and easy to configure: just generate it on your local machine, and then copy it onto the server. It will not ask you to enter a password everytime you want to connect (*except if you put a Key Phrase*) so you don't risk to forgot your password. 
 
-Here's how to create your pair of key: use the following command
+Here's how I created a pair of key:
 ```
 ssh-keygen -t ed25519
 ```
 ***ssh-keygen** is the command, **-t** specify the type of key to create and **ed25519** is the encryption algorithm (*Ed25519 is preferred over RSA because it is faster, provides better security with shorter key sizes, and is considered to be more resistant to certain types of cryptographic attacks.*)
 
-Now that your key is set locally you just need to copy it on the server:
+Now that my key is set locally I needed to copy it on the server:
 ```
 ssh-copy-id username@serveradress
 ```
 You will have a message (type in "yes"), and then you will be asked to enter your password. You will receive a confirmation, now try to connect and you will see the server asking you for your passphrase if you put one or it will connect using the key directly.
 - - -
 ## Disable password authentification
-Now that you've set a Key up, you want to disable Password authentification to add another layer of security.
-To access and modify the file located in /etc/ssh/sshd_config use the following command:
+Now that I've set a Key up, I wanted to disable Password authentification to add another layer of security.
+To access and modify the file located in /etc/ssh/sshd_config I used the following command:
 ```
 sudo nano /etc/ssh/sshd_config
 ```
-Now that you are in, look for the "Password Authentification yes" line, uncomment it and replace it by "Password Authentification no".
+**nano** gave me access and the ability to edit the file.
 
-Next save it and close the window by doing this combination on keys: *CRTL+O, Enter, CRTL+X*
+Now that I was in, looked for the "Password Authentification yes" line, uncommented it and replaced it by "Password Authentification no".
 
-Then restart your SSH service with the command:
+Next saved it and closed the window by doing this combination on keys: *CRTL+O, Enter, CRTL+X*
+
+Then restart the SSH service with the command:
 ```
 sudo systemctl restart ssh
 ```
@@ -98,12 +100,44 @@ Then test the connexion, if you connect to the server with another computer, it 
 If you've done all these steps and it still asks you for your password, consult
 - - -
 ## Use SCP FTP and SFTP
-Now I will explain you how to transfer files from your local machine to the server using the SCP Protocol (Secure Copy Protocol), it encrypts the file and send them surely.
+Now I learned  you how to transfer files from your local machine to the server using the SCP Protocol (Secure Copy Protocol), it encrypts the file and send them surely.
 
-First you need a file to transfer, here's the command
+First I needed a file to transfer, here's the command: (*careful you need to create it in your local machine not in the server*)
+```
+echo "Ceci est un fichier test" > fichier.txt
+```
+**echo** is the command, what's in quotes is the file's content and **> file name**
 
+Now to send it use the following command:
+```
+scp fichier.txt username@serveraddress:/home/username/
+```
+For example if I want to move it onto my server:
+```
+scp fichier.txt loris@serveraddress:/home/loris/
+```
+To check if the file has been succesfully sent use the following command:
+```
+ssh username@serveradress "ls -l /home/username/"
+```
 - - -
 ## Create a SSH tunnel
+Now that my server is up locally, I needed a way to route network traffic from my local machine through a remote server. For that I used the Secure Shell (SSH) protocol, to setup a SSH Tunnel.
+
+First step is to redirect the local port **8888** to the port **80** of a distant server. I used the following commands:
+
+```
+ssh -L 8080:localhost:80 username@serveraddress
+```
+Now I tried to connect to the server by connecting to: http://localhost:8080
+
+But it didn't worked. The reason is simple: I needed to install a web server of my VPS (because if I want to connect to a web server without the web server existing it's complicated). So I installed Nginx using the following commands:
+```
+sudo apt update #look for updates
+sudo apt install nginx #install nginx
+sudo systemctl start nginx #start nginx
+sudo systemctl enable nginx #enable nginx to start on boot
+```
 - - -
 ## Change the SSH Port
 - - - 
